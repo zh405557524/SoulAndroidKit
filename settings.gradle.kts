@@ -23,3 +23,8 @@ dependencyResolutionManagement {
 rootProject.name = "android-kit"
 include(":app")
 include(":core:common")
+include(":core:datebase")
+include(":core:designsystem")
+include(":core:media")
+include(":core:network")
+include(":core:ui")
