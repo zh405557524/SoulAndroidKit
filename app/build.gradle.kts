@@ -48,4 +48,7 @@ dependencies {
     implementation(libs.androidx.compose.ui.graphics)
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.compose.material3)
+    implementation(project(":core:common"))
+    implementation(libs.androidx.appcompat)
+    implementation(libs.androidx.recyclerview)   // 绝对可用
 }

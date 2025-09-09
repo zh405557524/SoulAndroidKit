@@ -13,9 +13,10 @@ import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.soul.lib.module.bluetooth.ble.BleCommunication;
-import com.soul.lib.module.bluetooth.ble.BluetoothBleConnectManager;
-import com.soul.lib.utils.LogUtils;
+
+import com.soul.common.module.bluetooth.ble.BleCommunication;
+import com.soul.common.module.bluetooth.ble.BluetoothBleConnectManager;
+import com.soul.common.utils.LogUtils;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;

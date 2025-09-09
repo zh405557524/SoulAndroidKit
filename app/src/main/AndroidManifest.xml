@@ -10,18 +10,40 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Androidkit">
+        android:theme="@style/Theme.SoulAndroidKit">
+        <!--        <activity-->
+        <!--            android:name=".MainActivity"-->
+        <!--            android:exported="true"-->
+        <!--            android:label="@string/app_name"-->
+        <!--            android:theme="@style/Theme.Androidkit">-->
+        <!--            <intent-filter>-->
+        <!--                <action android:name="android.intent.action.MAIN" />-->
+
+        <!--                <category android:name="android.intent.category.LAUNCHER" />-->
+        <!--            </intent-filter>-->
+        <!--        </activity>-->
+
+        <!-- 测试相关Activity -->
         <activity
-            android:name=".MainActivity"
+            android:name="com.soul.soulkit.test.TestMainActivity"
             android:exported="true"
-            android:label="@string/app_name"
-            android:theme="@style/Theme.Androidkit">
+            android:label="功能测试"
+            android:theme="@style/Theme.SoulAndroidKit">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name="com.soul.soulkit.test.common.CommonTestActivity"
+            android:exported="false"
+            android:label="Common模块测试" />
+
+        <activity
+            android:name="com.soul.soulkit.test.database.DatabaseTestActivity"
+            android:exported="false"
+            android:label="Database模块测试" />
     </application>
 
 </manifest>

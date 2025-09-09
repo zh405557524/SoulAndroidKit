@@ -11,8 +11,8 @@ import android.media.MediaRecorder;
 import android.util.Log;
 
 
-import com.soul.lib.Global;
-import com.soul.lib.utils.LogUtil;
+import com.soul.common.Global;
+import com.soul.common.utils.LogUtil;
 
 import java.io.BufferedInputStream;
 import java.io.DataInputStream;

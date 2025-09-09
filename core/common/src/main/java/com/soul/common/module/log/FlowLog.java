@@ -1,6 +1,7 @@
 package com.soul.common.module.log;
 
-import com.soul.lib.utils.LogUtil;
+
+import com.soul.common.utils.LogUtil;
 
 /**
  * Description: 流程日志

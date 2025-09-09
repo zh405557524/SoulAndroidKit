@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Theme.Androidkit" parent="android:Theme.Material.Light.NoActionBar" />
+    <style name="Theme.SoulAndroidKit" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <!-- 可按需自定义颜色/控件属性 -->
+    </style>
+
 </resources>

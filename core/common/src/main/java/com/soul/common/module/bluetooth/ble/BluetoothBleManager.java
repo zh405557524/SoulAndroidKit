@@ -14,7 +14,8 @@ import android.os.Build;
 import android.os.SystemClock;
 import android.util.Log;
 
-import com.soul.lib.utils.LogUtils;
+
+import com.soul.common.utils.LogUtils;
 
 import java.util.ArrayList;
 import java.util.List;

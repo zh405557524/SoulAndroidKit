@@ -8,8 +8,9 @@ import android.os.Messenger;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.soul.lib.Global;
-import com.soul.lib.utils.FileHelp;
+
+import com.soul.common.Global;
+import com.soul.common.utils.FileHelp;
 
 import java.io.File;
 import java.text.SimpleDateFormat;

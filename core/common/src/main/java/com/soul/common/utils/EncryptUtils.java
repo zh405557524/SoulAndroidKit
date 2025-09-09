@@ -13,8 +13,8 @@ import javax.crypto.Cipher;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 
-import static com.soul.lib.utils.ConvertUtils.bytes2HexString;
-import static com.soul.lib.utils.ConvertUtils.hexString2Bytes;
+import static com.soul.common.utils.ConvertUtils.bytes2HexString;
+import static com.soul.common.utils.ConvertUtils.hexString2Bytes;
 
 
 /**

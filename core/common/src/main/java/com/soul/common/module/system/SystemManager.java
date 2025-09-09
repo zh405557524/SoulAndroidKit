@@ -4,7 +4,7 @@ import android.content.Context;
 import android.media.AudioManager;
 
 
-import com.soul.lib.Global;
+import com.soul.common.Global;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

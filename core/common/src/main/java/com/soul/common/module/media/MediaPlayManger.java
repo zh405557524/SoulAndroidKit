@@ -5,7 +5,7 @@ import android.os.HandlerThread;
 import android.os.Looper;
 
 
-import com.soul.lib.utils.LogUtil;
+import com.soul.common.utils.LogUtil;
 
 import java.util.ArrayList;
 import java.util.List;

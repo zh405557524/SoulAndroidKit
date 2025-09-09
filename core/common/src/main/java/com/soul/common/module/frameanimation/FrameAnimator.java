@@ -10,8 +10,9 @@ import android.os.HandlerThread;
 import android.os.Message;
 import android.os.SystemClock;
 
-import com.soul.lib.Global;
-import com.soul.lib.utils.LogUtil;
+
+import com.soul.common.Global;
+import com.soul.common.utils.LogUtil;
 
 import java.lang.ref.WeakReference;
 

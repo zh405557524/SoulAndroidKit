@@ -19,7 +19,7 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 
-import com.soul.lib.utils.LogUtil;
+import com.soul.common.utils.LogUtil;
 
 import java.util.ArrayList;
 import java.util.List;

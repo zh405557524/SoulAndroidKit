@@ -16,7 +16,8 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipOutputStream;
 
-import static com.soul.lib.utils.ConstUtils.KB;
+import static com.soul.common.utils.ConstUtils.KB;
+
 
 /**
  * <pre>
