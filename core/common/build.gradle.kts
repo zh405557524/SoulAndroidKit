@@ -36,5 +36,7 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
-
+    
+    // 协程支持
+    implementation(libs.kotlinx.coroutines.android)
 }
