@@ -1,0 +1,134 @@
+package com.soul.soulkit.test.video
+
+import android.os.Bundle
+import android.util.Log
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import com.soul.android_kit.R
+import com.soul.android_kit.databinding.ActivityVideoTestBinding
+import com.soul.common.utils.LogUtil
+import com.soul.feature.video.IVideoPlayer
+import com.soul.feature.video.VideoPlayerManager
+
+/**
+ * 视频播放器测试Activity
+ * 演示如何使用视频播放模块
+ */
+class VideoTestActivity : AppCompatActivity() {
+    val TAG = "VideoTestActivity"
+
+    private lateinit var binding: ActivityVideoTestBinding
+    private val videoPlayerManager = VideoPlayerManager.getInstance()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivityVideoTestBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        setupVideoPlayer()
+        setupUI()
+    }
+
+    private fun setupVideoPlayer() {
+        // 绑定到容器
+        videoPlayerManager.attach(supportFragmentManager, binding.videoContainer)
+
+        // 设置播放状态监听
+        videoPlayerManager.setOnPlaybackStateListener(object :
+            IVideoPlayer.OnPlaybackStateListener {
+            override fun onPlaybackStateChanged(isPlaying: Boolean) {
+                runOnUiThread {
+                    binding.statusText.text = if (isPlaying) "正在播放" else "已暂停"
+                }
+            }
+
+            override fun onReady() {
+                Log.i(TAG, "onReady")
+                runOnUiThread {
+                    binding.statusText.text = "准备完成"
+                }
+            }
+
+            override fun onError(error: String) {
+                runOnUiThread {
+                    binding.statusText.text = "错误：$error"
+                    Toast.makeText(this@VideoTestActivity, error, Toast.LENGTH_LONG).show()
+                }
+            }
+
+            override fun onPlaybackCompleted() {
+                runOnUiThread {
+                    binding.statusText.text = "播放完成"
+                }
+            }
+        })
+
+        // 设置进度监听
+        videoPlayerManager.setOnProgressListener(object : IVideoPlayer.OnProgressListener {
+            override fun onProgressUpdate(currentPosition: Long, duration: Long) {
+                runOnUiThread {
+                    val current = formatTime(currentPosition)
+                    val total = formatTime(duration)
+                    binding.statusText.text = "播放中：$current / $total"
+                }
+            }
+        })
+    }
+
+    private fun setupUI() {
+        // 加载视频按钮
+        binding.loadVideoButton.setOnClickListener {
+            loadVideo()
+        }
+
+        // 播放按钮
+        binding.playButton.setOnClickListener {
+            videoPlayerManager.play()
+        }
+
+        // 暂停按钮
+        binding.pauseButton.setOnClickListener {
+            videoPlayerManager.pause()
+        }
+
+        // 停止按钮
+        binding.stopButton.setOnClickListener {
+            videoPlayerManager.stop()
+        }
+    }
+
+    private fun loadVideo() {
+        val videoUrl = binding.videoUrlEditText.text.toString().trim()
+
+        if (videoUrl.isEmpty()) {
+            Toast.makeText(this, "请输入视频地址", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        // 初始化视频
+        videoPlayerManager.initialize(videoUrl)
+
+        binding.statusText.text = "正在加载视频..."
+    }
+
+    /**
+     * 格式化时间显示
+     */
+    private fun formatTime(timeMs: Long): String {
+        val totalSeconds = timeMs / 1000
+        val hours = totalSeconds / 3600
+        val minutes = (totalSeconds % 3600) / 60
+        val seconds = totalSeconds % 60
+
+        return if (hours > 0) {
+            String.format("%d:%02d:%02d", hours, minutes, seconds)
+        } else {
+            String.format("%d:%02d", minutes, seconds)
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        videoPlayerManager.release()
+    }
+} 

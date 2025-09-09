@@ -1,4 +1,3 @@
-enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 pluginManagement {
     repositories {
         google {
@@ -28,4 +27,5 @@ include(":core:designsystem")
 include(":core:media")
 include(":core:network")
 include(":core:ui")
+include(":feature:video")
 // include(":javalib")

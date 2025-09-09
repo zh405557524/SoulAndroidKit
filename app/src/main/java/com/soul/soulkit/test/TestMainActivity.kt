@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.soul.android_kit.R
 import com.soul.soulkit.test.common.CommonTestActivity
 import com.soul.soulkit.test.database.DatabaseTestActivity
+import com.soul.soulkit.test.video.VideoTestActivity
 
 /**
  * 主测试Activity - 各个模块功能测试的分发入口
@@ -57,10 +58,10 @@ class TestMainActivity : AppCompatActivity() {
                 activityClass = null // TODO: 待创建
             ),
             TestModule(
-                name = "Media模块测试",
-                description = "媒体播放相关功能测试",
-                icon = "🎵",
-                activityClass = null // TODO: 待创建
+                name = "Video播放器测试",
+                description = "视频播放器功能测试",
+                icon = "🎬",
+                activityClass = VideoTestActivity::class.java
             ),
             TestModule(
                 name = "Network模块测试",

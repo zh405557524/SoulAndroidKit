@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    
+    <!-- 网络权限，用于播放网络视频 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    
+    <!-- 网络状态权限，用于检查网络连接 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    
+    <!-- 存储权限，用于播放本地视频文件 -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" 
+        android:maxSdkVersion="32" />
+    
+    <!-- Android 13+ 的媒体权限 -->
+    <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
+    
+    <!-- 唤醒锁权限，防止播放时屏幕关闭 -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+</manifest> 

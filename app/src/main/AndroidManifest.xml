@@ -44,6 +44,11 @@
             android:name="com.soul.soulkit.test.database.DatabaseTestActivity"
             android:exported="false"
             android:label="Database模块测试" />
+
+        <activity
+            android:name="com.soul.soulkit.test.video.VideoTestActivity"
+            android:exported="false"
+            android:label="Video播放器测试" />
     </application>
 
 </manifest>

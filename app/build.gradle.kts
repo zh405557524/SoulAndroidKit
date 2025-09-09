@@ -36,6 +36,7 @@ android {
     }
     buildFeatures {
         compose = true
+        viewBinding = true
     }
 }
 
@@ -49,6 +50,9 @@ dependencies {
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.compose.material3)
     implementation(project(":core:common"))
+    implementation(project(":feature:video"))
     implementation(libs.androidx.appcompat)
-    implementation(libs.androidx.recyclerview)   // 绝对可用
+    implementation(libs.androidx.recyclerview)
+    implementation(libs.material)
+    implementation(libs.androidx.media3.ui)   // 绝对可用
 }
