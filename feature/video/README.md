@@ -30,6 +30,9 @@
 ### 3. 管理器
 - `VideoPlayerManager` - 单例模式，外部调用统一入口，实现 IVideoPlayer 接口
 
+### 4. 配置类
+- `PlayConfig` - 播放配置类，支持视频地址、控制栏显示、自动播放、循环播放、静音等配置
+
 ## 快速使用
 
 ### 推荐方式：使用 VideoPlayerManager（单例）
@@ -38,10 +41,19 @@
 // 1. 获取管理器实例
 val videoPlayerManager = VideoPlayerManager.getInstance()
 
-// 2. 绑定到容器
-videoPlayerManager.attach(supportFragmentManager, binding.videoContainer)
+// 2. 创建播放配置（可选）
+val playConfig = PlayConfig(
+    videoUrl = "https://example.com/video.mp4",
+    isShowControls = true,
+    autoPlay = false,
+    looping = false,
+    muted = false
+)
 
-// 3. 设置监听
+// 3. 绑定到容器（可以直接传入配置）
+videoPlayerManager.attach(supportFragmentManager, binding.videoContainer, playConfig)
+
+// 4. 设置监听
 videoPlayerManager.setOnPlaybackStateListener(object : IVideoPlayer.OnPlaybackStateListener {
     override fun onPlaybackStateChanged(isPlaying: Boolean) {
         // 播放状态变化
@@ -66,9 +78,13 @@ videoPlayerManager.setOnProgressListener(object : IVideoPlayer.OnProgressListene
     }
 })
 
-// 4. 初始化并播放视频
-videoPlayerManager.initialize("https://example.com/video.mp4")
-videoPlayerManager.play()
+// 5. 如果没有在配置中指定，也可以手动初始化和播放
+// videoPlayerManager.initialize("https://example.com/video.mp4")
+// videoPlayerManager.play()
+
+// 或者动态更新配置
+val newConfig = PlayConfig("new_video.mp4", autoPlay = true, looping = true)
+videoPlayerManager.updatePlayConfig(newConfig)
 ```
 
 ### 方式二：直接使用播放器实现
@@ -107,9 +123,13 @@ videoPlayer.play()
 
 ```kotlin
 // 绑定管理
-fun attach(fragmentManager: FragmentManager, container: FrameLayout)
+fun attach(fragmentManager: FragmentManager, container: FrameLayout, playConfig: PlayConfig? = null)
 fun unbind()
 fun isAttached(): Boolean
+
+// 配置管理
+fun updatePlayConfig(config: PlayConfig)
+fun getCurrentPlayConfig(): PlayConfig?
 
 // 视频控制 (实现 IVideoPlayer 接口)
 fun initialize(videoUrl: String)

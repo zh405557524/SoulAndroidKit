@@ -68,7 +68,7 @@ class VideoPlayerImpl(private val context: Context) : IVideoPlayer {
             }
         }
 
-        override fun onPlayerError(error: androidx.media3.common.PlaybackException) {
+        override fun onPlayerError(error: PlaybackException) {
             stopProgressUpdate()
             playbackStateListener?.onError(error.message ?: "播放错误")
         }

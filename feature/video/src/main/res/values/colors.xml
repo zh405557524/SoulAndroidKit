@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="controls_background">#CC000000</color>
+    <color name="progress_color">#FF6200EE</color>
+    <color name="error_color">#FFFF5722</color>
+</resources> 

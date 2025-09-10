@@ -8,6 +8,7 @@ import com.soul.android_kit.R
 import com.soul.android_kit.databinding.ActivityVideoTestBinding
 import com.soul.common.utils.LogUtil
 import com.soul.feature.video.IVideoPlayer
+import com.soul.feature.video.PlayConfig
 import com.soul.feature.video.VideoPlayerManager
 
 /**
@@ -30,9 +31,15 @@ class VideoTestActivity : AppCompatActivity() {
     }
 
     private fun setupVideoPlayer() {
-        // 绑定到容器
-        videoPlayerManager.attach(supportFragmentManager, binding.videoContainer)
+        // 创建默认播放配置（可以根据需要修改）
+        val defaultConfig = PlayConfig(
+            videoUrl = "https://clip-live.oss-cn-shenzhen.aliyuncs.com/record/clip-live/f9c78238-0d10-443e-958e-9abbc0eb5ee2-douyin/32a2cb66-18d9-3ea5-a1d5-d1608483be2f_editing_1756188137.m3u8",
+            autoPlay = false,
+            looping = false,
+            muted = false
+        )
 
+        videoPlayerManager.initialize(this, binding.videoContainer, this)
         // 设置播放状态监听
         videoPlayerManager.setOnPlaybackStateListener(object :
             IVideoPlayer.OnPlaybackStateListener {
@@ -105,8 +112,16 @@ class VideoTestActivity : AppCompatActivity() {
             return
         }
 
-        // 初始化视频
-        videoPlayerManager.initialize(videoUrl)
+        // 创建播放配置（根据 UI 选项）
+        val playConfig = PlayConfig(
+            videoUrl = videoUrl,
+            autoPlay = binding.autoPlayCheckBox.isChecked,
+            looping = binding.loopingCheckBox.isChecked,
+            muted = binding.mutedCheckBox.isChecked
+        )
+
+        // 更新播放配置
+        videoPlayerManager.updatePlayConfig(playConfig)
 
         binding.statusText.text = "正在加载视频..."
     }
