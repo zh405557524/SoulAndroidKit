@@ -72,8 +72,6 @@ typedef union {
 #   include "mips/intreadwrite.h"
 #elif ARCH_PPC
 #   include "ppc/intreadwrite.h"
-#elif ARCH_TOMI
-#   include "tomi/intreadwrite.h"
 #elif ARCH_X86
 #   include "x86/intreadwrite.h"
 #endif
@@ -215,7 +213,7 @@ typedef union {
  * by per-arch headers.
  */
 
-#if defined(__GNUC__)
+#if defined(__GNUC__) || defined(__clang__)
 
 union unaligned_64 { uint64_t l; } __attribute__((packed)) av_alias;
 union unaligned_32 { uint32_t l; } __attribute__((packed)) av_alias;
@@ -540,6 +538,21 @@ union unaligned_16 { uint16_t l; } __attribute__((packed)) av_alias;
 
 #ifndef AV_WN64A
 #   define AV_WN64A(p, v) AV_WNA(64, p, v)
+#endif
+
+#if AV_HAVE_BIGENDIAN
+#   define AV_RLA(s, p)    av_bswap##s(AV_RN##s##A(p))
+#   define AV_WLA(s, p, v) AV_WN##s##A(p, av_bswap##s(v))
+#else
+#   define AV_RLA(s, p)    AV_RN##s##A(p)
+#   define AV_WLA(s, p, v) AV_WN##s##A(p, v)
+#endif
+
+#ifndef AV_RL64A
+#   define AV_RL64A(p) AV_RLA(64, p)
+#endif
+#ifndef AV_WL64A
+#   define AV_WL64A(p, v) AV_WLA(64, p, v)
 #endif
 
 /*

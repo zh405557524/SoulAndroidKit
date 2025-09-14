@@ -2,11 +2,11 @@ package com.soul.soulkit.test
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.soul.android_kit.R
+import com.soul.ffmpegkit.FFmpegTestActivity
 import com.soul.soulkit.test.common.CommonTestActivity
 import com.soul.soulkit.test.database.DatabaseTestActivity
 import com.soul.soulkit.test.video.VideoTestActivity
@@ -62,6 +62,12 @@ class TestMainActivity : AppCompatActivity() {
                 description = "视频播放器功能测试",
                 icon = "🎬",
                 activityClass = VideoTestActivity::class.java
+            ),
+            TestModule(
+                name = "FFmpeg播放器测试",
+                description = "基于FFmpeg的视频播放器测试",
+                icon = "🎥",
+                activityClass = FFmpegTestActivity::class.java
             ),
             TestModule(
                 name = "Network模块测试",

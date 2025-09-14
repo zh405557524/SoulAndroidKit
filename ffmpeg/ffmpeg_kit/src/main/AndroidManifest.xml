@@ -7,7 +7,7 @@
 
     <application>
         <activity
-            android:name=".FFmpegTestActivity"
+            android:name="com.soul.ffmpegkit.FFmpegTestActivity"
             android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
     </application>

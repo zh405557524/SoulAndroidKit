@@ -3,66 +3,74 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/background">
+    android:background="@color/background"
+    android:padding="16dp">
 
     <!-- 标题 -->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="FFmpeg 视频播放器测试"
-        android:textSize="18sp"
+        android:text="FFmpeg 信息测试"
+        android:textSize="20sp"
         android:textColor="@android:color/white"
         android:gravity="center"
         android:padding="16dp"
         android:background="@color/primary"/>
 
-    <!-- 视频播放区域 -->
-    <SurfaceView
-        android:id="@+id/surface_view"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:background="@android:color/black" />
-
-    <!-- 控制按钮区域 -->
+    <!-- 按钮区域 -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="16dp"
-        android:background="@color/background">
+        android:orientation="vertical"
+        android:padding="16dp">
 
         <Button
-            android:id="@+id/btn_play"
-            android:layout_width="0dp"
+            android:id="@+id/btn_version"
+            android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:layout_weight="1"
-            android:layout_marginEnd="8dp"
-            android:text="🎬 播放视频"
+            android:layout_marginBottom="8dp"
+            android:text="📋 获取FFmpeg版本"
             android:textColor="@android:color/white"
             android:textSize="14sp" />
 
         <Button
-            android:id="@+id/btn_stop"
-            android:layout_width="0dp"
+            android:id="@+id/btn_config"
+            android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:layout_weight="1"
-            android:layout_marginStart="8dp"
-            android:text="⏹️ 停止播放"
-            android:textColor="@color/text_primary"
+            android:layout_marginBottom="8dp"
+            android:text="⚙️ 获取FFmpeg配置"
+            android:textColor="@android:color/white"
+            android:textSize="14sp" />
+
+        <Button
+            android:id="@+id/btn_formats"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginBottom="16dp"
+            android:text="📁 获取支持的格式"
+            android:textColor="@android:color/white"
             android:textSize="14sp" />
 
     </LinearLayout>
 
-    <!-- 提示信息 -->
-    <TextView
+    <!-- 信息显示区域 -->
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="请确保设备中有测试视频文件：/sdcard/test_video.mp4"
-        android:textSize="12sp"
-        android:textColor="@color/text_secondary"
-        android:gravity="center"
-        android:padding="8dp"
-        android:background="@color/divider" />
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@android:color/black"
+        android:padding="8dp">
+
+        <TextView
+            android:id="@+id/tv_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="点击上方按钮获取FFmpeg信息..."
+            android:textSize="12sp"
+            android:textColor="@android:color/white"
+            android:fontFamily="monospace"
+            android:lineSpacingExtra="4dp" />
+
+    </ScrollView>
 
 </LinearLayout>
