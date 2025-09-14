@@ -1,4 +1,4 @@
-plugins {
+﻿plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
@@ -51,8 +51,9 @@ dependencies {
     implementation(libs.androidx.compose.material3)
     implementation(project(":core:common"))
     implementation(project(":feature:video"))
+    implementation(project(":ffmpeg:ffmpeg_kit"))
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.recyclerview)
     implementation(libs.material)
-    implementation(libs.androidx.media3.ui)   // 绝对可用
+    implementation(libs.androidx.media3.ui)
 }

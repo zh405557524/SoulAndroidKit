@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">FFmpeg Kit</string>
+    <string name="ffmpeg_test_title">FFmpeg 视频播放器测试</string>
+    <string name="play_video">播放视频</string>
+    <string name="stop_video">停止播放</string>
+    <string name="video_path_hint">请确保设备中有测试视频文件：/sdcard/test_video.mp4</string>
+    <string name="permission_granted">存储权限已获取</string>
+    <string name="permission_required">需要存储权限才能播放视频</string>
+    <string name="permission_denied">请先授予存储权限</string>
+    <string name="surface_ready">视频渲染表面已准备就绪</string>
+    <string name="start_playing">开始播放视频</string>
+    <string name="stop_playing">停止播放</string>
+</resources>
