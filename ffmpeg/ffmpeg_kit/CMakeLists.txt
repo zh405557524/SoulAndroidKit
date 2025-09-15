@@ -25,6 +25,7 @@ add_library(ffmpeg_player SHARED ${glob_source_files})
 # 头文件（目标级）
 target_include_directories(ffmpeg_player PRIVATE
         ${INCLUDE_DIR}/ffmpeg
+        ${INCLUDE_DIR}
         ${SRC_DIR}
 )
 
@@ -68,7 +69,7 @@ find_library(android_lib  android)
 find_library(dl_lib       dl)
 find_library(m_lib        m)
 # 你有 .cpp 源，显式链接 C++ 运行时更稳
-find_library(cpp_shared   c++_shared)
+#find_library(cpp_shared   c++_shared)
 
 # ===== 链接（顺序很重要）=====
 # 高层 → 低层：avdevice → avfilter → avformat → avcodec → swscale/swresample → avutil → 系统库
@@ -84,5 +85,5 @@ target_link_libraries(ffmpeg_player
         ${android_lib}
         ${dl_lib}
         ${m_lib}
-        ${cpp_shared}
+#        ${cpp_shared}
 )
