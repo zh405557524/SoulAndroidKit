@@ -11,7 +11,7 @@ project(ffmpeg_kit)
 # 设置生成的so动态库最后输出的路径
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/jniLibs/${ANDROID_ABI})
 
-set(INCLUDE_DIR ${CMAKE_SOURCE_DIR}/src/main/jni/include)
+set(INCLUDE_DIR ${CMAKE_SOURCE_DIR}/src/main/cpp/include)
 # 设置头文件路径，在代码中include时不需要带路径了
 include_directories(${INCLUDE_DIR}/ffmpeg)
 
@@ -22,12 +22,10 @@ include_directories(${INCLUDE_DIR}/ffmpeg)
 
 add_library( # Sets the name of the library.
         ffmpeg_player
-
         # Sets the library as a shared library.
         SHARED
-
         # Provides a relative path to your source file(s).
-        src/main/jni/ffmpeg_player.c )
+        src/main/cpp/ffmpeg_player.c )
 
 
 
@@ -71,7 +69,6 @@ target_link_libraries( # Specifies the target library.
         avcodec
         avformat
         avutil
-
 
         # Links the target library to the log library
         # included in the NDK.

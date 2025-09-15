@@ -54,4 +54,5 @@ dependencies {
     testImplementation(libs.junit)
 //    androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+    api("com.arthenica:smart-exception-java:0.2.1")
 }
