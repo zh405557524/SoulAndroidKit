@@ -1,5 +1,5 @@
-#include <libavformat/avformat.h>
-#include <libavcodec/avcodec.h>
+#include "libavformat/avformat.h"
+#include "libavcodec/avcodec.h"
 #include <jni.h>
 #include <android/log.h>
 
