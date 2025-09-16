@@ -6,15 +6,16 @@ import com.soul.common.Global
 /**
  * Description: TODO
  * Author: zhuMing
- * CreateDate: 2025/9/15 20:41
+ * CreateDate: 2025/9/16 21:14
  * ProjectName: android-kit
  * UpdateUser:
- * UpdateDate: 2025/9/15 20:41
+ * UpdateDate: 2025/9/16 21:14
  * UpdateRemark:
  */
-class BaseApplication : Application() {
+class BaseApplication: Application() {
     override fun onCreate() {
         super.onCreate()
-        Global.init(this, true)
+        Global.init(this,true)
     }
+
 }

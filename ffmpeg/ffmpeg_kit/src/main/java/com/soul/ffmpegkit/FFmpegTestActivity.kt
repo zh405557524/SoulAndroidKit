@@ -23,7 +23,7 @@ class FFmpegTestActivity : Activity() {
     private var formatsButton: Button? = null
     private var btn_cutVideo: Button? = null
     private var infoTextView: TextView? = null
-    private var ffmpegPlayer: FFmpegPlayer? = null
+//    private var ffmpegPlayer: FFmpegPlayer? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,7 +48,7 @@ class FFmpegTestActivity : Activity() {
 
     private fun initPlayer() {
         try {
-            ffmpegPlayer = FFmpegPlayer()
+//            ffmpegPlayer = FFmpegPlayer()
             Toast.makeText(this, "FFmpeg库加载成功", Toast.LENGTH_SHORT).show()
         } catch (e: Exception) {
             Toast.makeText(this, "FFmpeg库加载失败: ${e.message}", Toast.LENGTH_LONG).show()
@@ -57,8 +57,8 @@ class FFmpegTestActivity : Activity() {
 
     private fun getVersion() {
         try {
-            val version = ffmpegPlayer!!.getFFmpegVersion()
-            infoTextView!!.text = "FFmpeg版本: $version"
+//            val version = ffmpegPlayer!!.getFFmpegVersion()
+//            infoTextView!!.text = "FFmpeg版本: $version"
             Toast.makeText(this, "获取版本成功", Toast.LENGTH_SHORT).show()
         } catch (e: Exception) {
             Toast.makeText(this, "获取版本失败: ${e.message}", Toast.LENGTH_LONG).show()
@@ -67,8 +67,8 @@ class FFmpegTestActivity : Activity() {
 
     private fun getConfiguration() {
         try {
-            val config = ffmpegPlayer!!.getFFmpegConfiguration()
-            infoTextView!!.text = "FFmpeg配置: $config"
+//            val config = ffmpegPlayer!!.getFFmpegConfiguration()
+//            infoTextView!!.text = "FFmpeg配置: $config"
             Toast.makeText(this, "获取配置成功", Toast.LENGTH_SHORT).show()
         } catch (e: Exception) {
             Toast.makeText(this, "获取配置失败: ${e.message}", Toast.LENGTH_LONG).show()
@@ -77,8 +77,8 @@ class FFmpegTestActivity : Activity() {
 
     private fun getFormats() {
         try {
-            val formats = ffmpegPlayer!!.getSupportedFormats()
-            infoTextView!!.text = "支持的格式: $formats"
+//            val formats = ffmpegPlayer!!.getSupportedFormats()
+//            infoTextView!!.text = "支持的格式: $formats"
             Toast.makeText(this, "获取格式成功", Toast.LENGTH_SHORT).show()
         } catch (e: Exception) {
             Toast.makeText(this, "获取格式失败: ${e.message}", Toast.LENGTH_LONG).show()
