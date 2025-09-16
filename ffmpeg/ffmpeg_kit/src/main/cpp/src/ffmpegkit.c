@@ -686,8 +686,8 @@ jint JNI_OnLoad(JavaVM *vm, void *reserved) {
 
     redirectionEnabled = 0;
 
-    av_set_saf_open(saf_open);
-    av_set_saf_close(saf_close);
+//    av_set_saf_open(saf_open);
+//    av_set_saf_close(saf_close);
 
     enableNativeRedirection();
 
@@ -871,10 +871,25 @@ JNIEXPORT int JNICALL Java_com_arthenica_ffmpegkit_FFmpegKitConfig_registerNewNa
  * @param object reference to the class on which this method is invoked
  * @return FFmpegKit library build date
  */
-JNIEXPORT jstring JNICALL Java_com_arthenica_ffmpegkit_FFmpegKitConfig_getNativeBuildDate(JNIEnv *env, jclass object) {
-    char buildDate[10];
-    sprintf(buildDate, "%d", FFMPEG_KIT_BUILD_DATE);
-    return (*env)->NewStringUTF(env, buildDate);
+// 把编译期宏转成字符串的工具宏
+#define STR2(x) #x
+#define STR(x)  STR2(x)
+
+JNIEXPORT jstring JNICALL
+Java_com_arthenica_ffmpegkit_FFmpegKitConfig_getNativeBuildDate(JNIEnv *env, jclass clazz) {
+    char buf[64];
+
+#ifdef FFMPEG_KIT_BUILD_DATE
+    // 如果外部定义了数值或字符串宏，都转为字符串再用
+    snprintf(buf, sizeof(buf), "%s", STR(FFMPEG_KIT_BUILD_DATE));
+#elif defined(__DATE__) && defined(__TIME__)
+    // 兜底：用编译器内置日期时间
+    snprintf(buf, sizeof(buf), "%s %s", __DATE__, __TIME__);  // e.g. "Sep 16 2025 22:01:33"
+#else
+    snprintf(buf, sizeof(buf), "%s", "unknown");
+#endif
+
+    return (*env)->NewStringUTF(env, buf);
 }
 
 /**

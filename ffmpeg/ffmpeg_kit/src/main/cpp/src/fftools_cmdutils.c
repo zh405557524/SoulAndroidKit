@@ -88,6 +88,7 @@
 #include "libavutil/getenv_utf8.h"
 #include "libavutil/mathematics.h"
 #include "libavutil/imgutils.h"
+#include "libavutil/libm.h"
 #include "libavutil/parseutils.h"
 #include "libavutil/eval.h"
 #include "libavutil/dict.h"

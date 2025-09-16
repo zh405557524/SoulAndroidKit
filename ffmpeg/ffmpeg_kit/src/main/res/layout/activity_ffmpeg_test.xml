@@ -2,20 +2,20 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/background"
+    android:orientation="vertical"
     android:padding="16dp">
 
     <!-- 标题 -->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="FFmpeg 信息测试"
-        android:textSize="20sp"
-        android:textColor="@android:color/white"
+        android:background="@color/primary"
         android:gravity="center"
         android:padding="16dp"
-        android:background="@color/primary"/>
+        android:text="FFmpeg 信息测试"
+        android:textColor="@android:color/white"
+        android:textSize="20sp" />
 
     <!-- 按钮区域 -->
     <LinearLayout
@@ -51,6 +51,15 @@
             android:textColor="@android:color/white"
             android:textSize="14sp" />
 
+        <Button
+            android:id="@+id/btn_cutVideo"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginBottom="16dp"
+            android:text="📁 切割视频"
+            android:textColor="@android:color/white"
+            android:textSize="14sp" />
+
     </LinearLayout>
 
     <!-- 信息显示区域 -->
@@ -65,11 +74,11 @@
             android:id="@+id/tv_info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="点击上方按钮获取FFmpeg信息..."
-            android:textSize="12sp"
-            android:textColor="@android:color/white"
             android:fontFamily="monospace"
-            android:lineSpacingExtra="4dp" />
+            android:lineSpacingExtra="4dp"
+            android:text="点击上方按钮获取FFmpeg信息..."
+            android:textColor="@android:color/white"
+            android:textSize="12sp" />
 
     </ScrollView>
 
