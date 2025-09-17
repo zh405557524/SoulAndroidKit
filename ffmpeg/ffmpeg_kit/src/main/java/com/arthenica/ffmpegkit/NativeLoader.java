@@ -22,7 +22,6 @@ package com.arthenica.ffmpegkit;
 import android.os.Build;
 
 import com.arthenica.smartexception.java.Exceptions;
-import com.soul.common.utils.LogUtil;
 
 import java.text.SimpleDateFormat;
 import java.util.Collections;
@@ -44,7 +43,6 @@ public class NativeLoader {
     }
 
     private static void loadLibrary(final String libraryName) {
-        LogUtil.i(TAG, "loadLibrary:" + libraryName);
         if (isTestModeDisabled()) {
             try {
                 System.loadLibrary(libraryName);

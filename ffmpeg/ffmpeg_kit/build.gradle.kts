@@ -15,7 +15,7 @@ android {
         externalNativeBuild {
             cmake {
                 cppFlags("")
-                abiFilters("armeabi-v7a", "arm64-v8a")
+                abiFilters( "arm64-v8a")
             }
         }
     }
@@ -56,5 +56,5 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
     api("com.arthenica:smart-exception-java:0.2.1")
     implementation(project(":core:common"))
-    api("com.arthenica:smart-exception-java:0.2.1")
+
 }
