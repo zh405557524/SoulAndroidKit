@@ -96,7 +96,7 @@ private fun FFmpegTestActivity.btn_cutVideo() {
         output = outputPath,
         startMs = 1000 * 2,
         durationMs = 1000 * 20,
-        reencode = false, // 优先使用无损快剪
+        reencode = true, // 优先使用无损快剪
         expectedTotalMs = 18 * 1000,
         timeoutMs = 120_000L // 2分钟超时
     )
