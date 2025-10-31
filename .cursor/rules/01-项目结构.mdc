@@ -1,0 +1,448 @@
+# SoulAndroidKit 项目结构规则
+
+## 📋 项目概述
+
+SoulAndroidKit 是一个基于现代Android开发最佳实践的工具库，采用多模块架构设计，支持 Jetpack Compose、Room数据库、协程等最新技术栈。
+
+## 🏗️ 整体架构
+
+### 架构分层原则
+项目采用多模块架构，遵循以下原则：
+- **高内聚、低耦合**：每个模块负责特定的功能领域
+- **单向依赖**：上层模块可以依赖下层模块，反之不行
+- **API/Impl分离**：feature模块采用API/实现分离，便于模块化和测试
+- **依赖倒置**：通过接口定义契约，降低模块间耦合
+
+### 模块层级
+```
+┌─────────────────────────────────────┐
+│          app (壳应用)                │  ← 应用层：组装和导航
+├─────────────────────────────────────┤
+│        feature/* (业务功能)          │  ← 业务层：具体业务实现
+├─────────────────────────────────────┤
+│          kit/* (能力封装)            │  ← 能力层：三方库和系统能力封装
+├─────────────────────────────────────┤
+│        core/* (核心基础)             │  ← 基础层：通用能力和基础设施
+├─────────────────────────────────────┤
+│       ffmpeg (专项能力)              │  ← 专项层：FFmpeg视频处理
+└─────────────────────────────────────┘
+```
+
+## 📦 模块详解
+
+### 1. app/ - 应用壳模块
+**职责**：
+- 应用入口和启动配置
+- 全局导航图定义
+- 模块组装和集成
+- 应用级别的主题配置
+
+**依赖规则**：
+- ✅ 可以依赖所有 feature、core、kit 模块
+- ❌ 不应包含具体业务逻辑
+- ❌ 不应直接访问三方库（通过kit模块封装）
+
+**关键文件**：
+- `MainActivity.kt` - 主入口
+- `MainApplication.kt` - Application初始化
+- `build.gradle.kts` - 应用级配置
+
+---
+
+### 2. core/ - 核心基础模块组
+
+#### 2.1 core/common - 通用工具
+**职责**：
+- Kotlin扩展函数
+- 通用工具类（日志、日期、字符串等）
+- 结果封装（Result、Resource等）
+- 协程工具和作用域管理
+- 通用常量和配置
+
+**依赖规则**：
+- ✅ 只依赖Android SDK和Kotlin标准库
+- ❌ 不依赖其他任何项目模块
+- ✅ 其他所有模块都可以依赖它
+
+**代码组织**：
+```
+common/
+├── extensions/          # 扩展函数
+│   ├── StringExt.kt
+│   ├── ViewExt.kt
+│   └── FlowExt.kt
+├── utils/              # 工具类
+│   ├── Logger.kt
+│   ├── DateUtils.kt
+│   └── JsonUtils.kt
+├── result/             # 结果封装
+│   └── Result.kt
+└── constants/          # 常量定义
+```
+
+#### 2.2 core/database - 数据库模块
+**职责**：
+- Room数据库配置和初始化
+- 实体类（Entity）定义
+- 数据访问对象（DAO）
+- 数据库迁移策略
+- 类型转换器
+
+**依赖规则**：
+- ✅ 依赖 core/common
+- ✅ 使用 Room 组件
+- ❌ 不依赖 UI 相关模块
+
+**技术栈**：
+- Room Runtime/KTX
+- Kotlin Coroutines
+- Flow 响应式数据流
+
+#### 2.3 core/designsystem - 设计系统
+**职责**：
+- Material Design 3 主题配置
+- 颜色、字体、间距定义
+- 自定义Compose组件
+- 深色模式支持
+- 设计规范和风格指南
+
+**依赖规则**：
+- ✅ 依赖 core/common
+- ✅ 使用 Jetpack Compose
+- ✅ 所有UI模块应依赖此模块
+
+**代码组织**：
+```
+designsystem/
+├── theme/              # 主题配置
+│   ├── Color.kt
+│   ├── Typography.kt
+│   └── Theme.kt
+├── component/          # 自定义组件
+└── icon/              # 图标资源
+```
+
+#### 2.4 core/composeui - Compose UI工具
+**职责**：
+- Compose通用UI组件
+- StatefulLayout（加载/空态/错误）
+- 对话框封装
+- 通用UI交互组件
+
+**依赖规则**：
+- ✅ 依赖 core/common、core/designsystem
+- ✅ 提供可复用的UI组件
+
+#### 2.5 core/ui - 传统UI模块
+**职责**：
+- 传统View系统的UI组件
+- Activity/Fragment基类
+- ViewModel基础类
+- 页面导航管理
+
+**依赖规则**：
+- ✅ 依赖 core/common
+- ✅ 使用 Navigation Component
+
+#### 2.6 core/network - 网络请求
+**职责**：
+- Retrofit配置和初始化
+- OkHttp拦截器
+- API接口定义
+- 错误处理和重试
+- 网络状态监控
+
+**依赖规则**：
+- ✅ 依赖 core/common
+- ✅ 使用 Retrofit + OkHttp + Gson
+- ✅ 协程支持
+
+#### 2.7 core/media - 多媒体基础
+**职责**：
+- 媒体文件管理
+- 图片加载基础封装
+- 视频播放基础能力
+- 相机基础能力
+
+**依赖规则**：
+- ✅ 依赖 core/common
+- ✅ 可以被 kit 和 feature 模块依赖
+
+---
+
+### 3. feature/ - 业务功能模块组
+
+#### API/Impl 分离模式
+所有feature模块采用API/实现分离：
+```
+feature/
+├── poster/
+│   ├── api/            # 对外暴露的接口和契约
+│   └── impl/           # 具体实现
+└── video/
+    ├── editor/
+    │   ├── api/
+    │   └── impl/
+    └── split/
+        ├── api/
+        └── impl/
+```
+
+**API模块职责**：
+- 定义公开接口
+- 定义数据模型
+- 不包含具体实现
+- 轻量级，减少依赖
+
+**Impl模块职责**：
+- 实现API模块定义的接口
+- 包含UI、ViewModel、Repository等
+- 依赖API模块
+- 可以依赖其他模块的API
+
+**依赖规则**：
+- ✅ api模块只依赖 core 模块
+- ✅ impl模块依赖对应的api模块
+- ✅ impl模块可以依赖其他feature的api模块
+- ❌ impl模块不应直接依赖其他impl模块
+- ✅ 都可以依赖 kit 模块
+
+---
+
+### 4. kit/ - 能力封装模块组
+
+**职责**：
+- 封装三方SDK和系统能力
+- 提供统一的API接口
+- 简化上层使用
+- 便于替换底层实现
+
+#### 4.1 kit/video - 视频能力
+**当前实现**：
+- 视频处理基础能力
+- 集成 FFmpeg 处理
+
+**依赖规则**：
+- ✅ 依赖 core/common、core/media
+- ✅ 依赖 ffmpeg/ffmpeg_kit
+
+#### 4.2 kit/picker - 媒体选择器
+**职责**：
+- 封装系统 Photo Picker
+- 支持替换为第三方选择器
+- 统一的选择接口
+
+#### 4.3 kit/download - 下载管理
+**职责**：
+- 封装 DownloadManager
+- 支持替换为三方下载器
+- 下载进度和状态管理
+
+#### 4.4 kit/player-media3 - 播放器
+**职责**：
+- 封装 Media3/ExoPlayer
+- 提供统一的播放器接口
+- 播放控制和状态管理
+
+**依赖规则（通用）**：
+- ✅ 依赖 core 模块
+- ✅ 被 feature 模块依赖
+- ❌ kit模块之间应避免相互依赖
+
+---
+
+### 5. ffmpeg/ffmpeg_kit - FFmpeg处理模块
+
+**职责**：
+- FFmpeg库的JNI封装
+- 视频/音频编解码
+- 格式转换和处理
+- 命令行接口封装
+
+**技术栈**：
+- FFmpeg 6.0+
+- NDK C/C++
+- CMake构建
+- JNI桥接
+
+**目录结构**：
+```
+ffmpeg_kit/
+├── src/main/
+│   ├── cpp/                # C/C++源码
+│   │   ├── src/           # 实现文件
+│   │   │   ├── ffmpeg_kit_config.c
+│   │   │   ├── ffmpeg_executor.c
+│   │   │   └── ffmpeg_player.c
+│   │   └── include/       # 头文件
+│   ├── java/              # Java/Kotlin接口
+│   └── jniLibs/           # 预编译so库
+├── CMakeLists.txt         # CMake配置
+└── build.gradle.kts       # Gradle配置
+```
+
+**依赖规则**：
+- ✅ 可以依赖 core/common（日志等）
+- ✅ 被 kit/video 依赖
+- ❌ 不应依赖UI相关模块
+
+**关键功能**：
+- 消息传输和日志
+- 命名管道创建
+- FFmpeg命令执行
+- FFprobe信息获取
+- 执行控制（取消、重试）
+
+---
+
+## 🔧 开发规范
+
+### 模块创建规范
+1. **命名约定**：
+   - core模块：`core-模块名`
+   - feature模块：`feature-功能名-api/impl`
+   - kit模块：`kit-能力名`
+
+2. **必需文件**：
+   - `build.gradle.kts` - Gradle配置
+   - `consumer-rules.pro` - ProGuard消费者规则
+   - `proguard-rules.pro` - ProGuard规则
+   - `README.md` - 模块说明文档
+
+3. **模块注册**：
+   - 在 `settings.gradle.kts` 中注册
+   - 在 `gradle/libs.versions.toml` 中管理依赖版本
+
+### 代码组织规范
+```
+module/src/main/
+├── java/com/soul/模块名/
+│   ├── api/              # 公开接口
+│   ├── internal/         # 内部实现
+│   ├── model/            # 数据模型
+│   ├── ui/               # UI组件
+│   │   ├── screen/       # 页面
+│   │   └── component/    # 组件
+│   ├── viewmodel/        # ViewModel
+│   └── repository/       # 数据仓库
+└── res/                  # 资源文件
+```
+
+### 包名规范
+- 基础包名：`com.soul.*`
+- core模块：`com.soul.core.模块名`
+- feature模块：`com.soul.feature.功能名`
+- kit模块：`com.soul.kit.能力名`
+- ffmpeg模块：`com.arthenica.ffmpegkit`
+
+### 依赖添加规范
+1. 在 `gradle/libs.versions.toml` 中声明版本
+2. 使用版本目录引用：`implementation(libs.xxx)`
+3. 避免硬编码版本号
+4. 定期更新依赖版本
+
+### 代码风格规范
+- 遵循 Kotlin 官方编码规范
+- 使用 4 空格缩进
+- 类名使用大驼峰（PascalCase）
+- 函数和变量使用小驼峰（camelCase）
+- 常量使用全大写下划线分隔（UPPER_SNAKE_CASE）
+
+### 注释规范
+- 公开API必须有KDoc注释
+- 复杂逻辑添加行内注释
+- TODO标记待完成事项
+- FIXME标记需要修复的问题
+
+---
+
+## 📊 依赖关系图
+
+```
+app
+├── feature/*-impl
+│   ├── feature/*-api
+│   ├── kit/*
+│   └── core/*
+├── kit/*
+│   ├── ffmpeg_kit (仅kit/video)
+│   └── core/*
+└── core/designsystem
+    └── core/common
+
+ffmpeg_kit
+└── core/common (仅日志等基础功能)
+```
+
+---
+
+## 🎯 开发建议
+
+### 添加新功能时
+1. **确定模块归属**：判断是core、feature还是kit
+2. **检查依赖方向**：确保不违反依赖规则
+3. **复用现有模块**：优先使用已有的能力
+4. **考虑可测试性**：采用依赖注入，便于单元测试
+
+### 模块依赖检查清单
+- [ ] 是否遵循单向依赖原则？
+- [ ] 是否形成循环依赖？
+- [ ] 是否可以通过API模块避免直接依赖？
+- [ ] 是否有更底层的模块可以复用？
+
+### 重构建议
+- 当发现多个模块有相同逻辑时，考虑下沉到core
+- 当模块变得臃肿时，考虑拆分为更小的模块
+- 当依赖关系复杂时，考虑引入中间层或抽象
+
+---
+
+## 📝 更新日志
+
+当修改项目结构时，请更新：
+1. 本规则文档
+2. 项目根目录 `README.md`
+3. 相关模块的 `README.md`
+4. `settings.gradle.kts` 模块注册
+
+---
+
+## 🔗 相关文档
+
+- [README.md](../../README.md) - 项目总体说明
+- [libs.versions.toml](../../gradle/libs.versions.toml) - 依赖版本管理
+- [settings.gradle.kts](../../settings.gradle.kts) - 模块配置
+- [FFmpeg模块说明](../../ffmpeg/ffmpeg_kit/README.md) - FFmpeg详细文档
+- [Common模块说明](../../core/common/README.md) - 通用工具说明
+
+---
+
+## ❓ 常见问题
+
+**Q: 我应该把代码放在哪个模块？**
+- 通用工具 → `core/common`
+- UI组件 → `core/designsystem` 或 `core/composeui`
+- 业务逻辑 → `feature/*`
+- 三方库封装 → `kit/*`
+- FFmpeg相关 → `ffmpeg/ffmpeg_kit`
+
+**Q: 为什么要API/Impl分离？**
+- 降低编译依赖
+- 便于模块化测试
+- 支持多实现切换
+- 减少耦合
+
+**Q: 可以在core模块中依赖Android特定API吗？**
+- 可以，但应控制范围
+- core/common应尽量保持纯Kotlin
+- 其他core模块可以依赖Android SDK
+
+**Q: 如何处理模块间的数据传递？**
+- 通过API模块定义数据模型
+- 使用依赖注入传递实例
+- 避免使用全局单例
+
+---
+
+> 📌 **提示**：在开发过程中，如果遇到不符合此规范的情况，请先考虑是否需要调整代码结构，而不是违反规范。如有特殊情况，请在代码注释中说明原因。
+
