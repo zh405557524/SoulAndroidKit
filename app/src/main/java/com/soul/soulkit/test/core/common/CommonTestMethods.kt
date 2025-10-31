@@ -1,11 +1,7 @@
-package com.soul.soulkit.test.common
+package com.soul.soulkit.test.core.common
 
-import android.content.Context
-import com.soul.common.Global
 import com.soul.common.utils.*
 import java.io.File
-import java.text.SimpleDateFormat
-import java.util.*
 
 /**
  * Common模块测试方法扩展

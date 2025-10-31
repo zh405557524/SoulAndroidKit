@@ -1,4 +1,4 @@
-package com.soul.soulkit.test.video
+package com.soul.soulkit.test.kit.video
 
 import android.os.Bundle
 import android.util.Log

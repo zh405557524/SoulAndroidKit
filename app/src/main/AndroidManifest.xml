@@ -37,17 +37,17 @@
         </activity>
 
         <activity
-            android:name="com.soul.soulkit.test.common.CommonTestActivity"
+            android:name="com.soul.soulkit.test.core.common.CommonTestActivity"
             android:exported="false"
             android:label="Common模块测试" />
 
         <activity
-            android:name="com.soul.soulkit.test.database.DatabaseTestActivity"
+            android:name="com.soul.soulkit.test.kit.database.DatabaseTestActivity"
             android:exported="false"
             android:label="Database模块测试" />
 
         <activity
-            android:name="com.soul.soulkit.test.video.VideoTestActivity"
+            android:name="com.soul.soulkit.test.kit.video.VideoTestActivity"
             android:exported="false"
             android:label="Video播放器测试" />
     </application>

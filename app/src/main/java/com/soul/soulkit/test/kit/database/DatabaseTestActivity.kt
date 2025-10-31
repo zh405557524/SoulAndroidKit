@@ -1,4 +1,4 @@
-package com.soul.soulkit.test.database
+package com.soul.soulkit.test.kit.database
 
 import android.os.Bundle
 import android.widget.TextView

@@ -8,7 +8,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.soul.android_kit.R
-import com.soul.soulkit.test.common.TestItem
+import com.soul.soulkit.test.core.common.TestItem
 
 /**
  * 基础测试Activity，包含通用的测试功能

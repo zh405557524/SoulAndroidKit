@@ -1,11 +1,9 @@
-package com.soul.soulkit.test.common
+package com.soul.soulkit.test.core.common
 
 import android.os.Bundle
 import android.widget.Button
 import android.widget.ScrollView
 import android.widget.LinearLayout
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import com.soul.android_kit.R
 import com.soul.soulkit.test.BaseTestActivity
 import com.soul.common.Global

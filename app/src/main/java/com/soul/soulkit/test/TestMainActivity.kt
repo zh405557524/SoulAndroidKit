@@ -7,9 +7,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.soul.android_kit.R
 import com.soul.ffmpegkit.FFmpegTestActivity
-import com.soul.soulkit.test.common.CommonTestActivity
-import com.soul.soulkit.test.database.DatabaseTestActivity
-import com.soul.soulkit.test.video.VideoTestActivity
+import com.soul.soulkit.test.core.common.CommonTestActivity
+import com.soul.soulkit.test.kit.database.DatabaseTestActivity
+import com.soul.soulkit.test.kit.video.VideoTestActivity
 
 /**
  * 主测试Activity - 各个模块功能测试的分发入口
