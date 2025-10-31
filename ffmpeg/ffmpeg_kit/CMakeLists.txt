@@ -142,6 +142,8 @@ target_compile_options(ffmpegkit PRIVATE
     ${MY_CFLAGS}
 )
 
+target_link_options(ffmpegkit PRIVATE "-Wl,-z,max-page-size=16384")
+
 # ===== 链接（顺序很重要）=====
 # 高层 → 低层：avdevice → avfilter → avformat → avcodec → swscale/swresample → avutil → 系统库
 target_link_libraries(ffmpegkit
