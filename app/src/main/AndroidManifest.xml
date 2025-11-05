@@ -47,6 +47,11 @@
             android:label="Common模块测试" />
 
         <activity
+            android:name="com.soul.soulkit.test.core.database.DatabaseTestActivity"
+            android:exported="false"
+            android:label="Database模块测试" />
+
+        <activity
             android:name="com.soul.soulkit.test.kit.KitCoreModelTestActivity"
             android:exported="false"
             android:label="Kit能力模块测试" />

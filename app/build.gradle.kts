@@ -50,6 +50,7 @@ dependencies {
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.compose.material3)
     implementation(project(":core:common"))
+    implementation(project(":core:database"))
     implementation(project(":kit:video"))
     implementation(project(":ffmpeg:ffmpeg_kit"))
     implementation(libs.androidx.appcompat)

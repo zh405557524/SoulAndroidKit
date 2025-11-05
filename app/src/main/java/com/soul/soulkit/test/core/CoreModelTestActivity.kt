@@ -9,6 +9,7 @@ import com.soul.android_kit.R
 import com.soul.soulkit.test.TestModule
 import com.soul.soulkit.test.TestModuleAdapter
 import com.soul.soulkit.test.core.common.CommonTestActivity
+import com.soul.soulkit.test.core.database.DatabaseTestActivity
 
 /**
  * Core 核心模块测试入口 Activity
@@ -61,7 +62,7 @@ class CoreModelTestActivity : AppCompatActivity() {
                 name = "Database 数据库",
                 description = "数据库相关功能测试",
                 icon = "💾",
-                activityClass = null // TODO: 待创建 DatabaseTestActivity
+                activityClass = DatabaseTestActivity::class.java
             ),
             TestModule(
                 name = "DesignSystem 设计系统",
