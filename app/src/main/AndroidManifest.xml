@@ -37,6 +37,11 @@
         </activity>
 
         <activity
+            android:name="com.soul.soulkit.test.core.CoreModelTestActivity"
+            android:exported="false"
+            android:label="Core核心模块测试" />
+
+        <activity
             android:name="com.soul.soulkit.test.core.common.CommonTestActivity"
             android:exported="false"
             android:label="Common模块测试" />

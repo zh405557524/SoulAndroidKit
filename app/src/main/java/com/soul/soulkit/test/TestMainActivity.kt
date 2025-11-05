@@ -6,13 +6,17 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.soul.android_kit.R
-import com.soul.ffmpegkit.FFmpegTestActivity
-import com.soul.soulkit.test.core.common.CommonTestActivity
-import com.soul.soulkit.test.kit.database.DatabaseTestActivity
-import com.soul.soulkit.test.kit.video.VideoTestActivity
+import com.soul.soulkit.test.core.CoreModelTestActivity
+import com.soul.soulkit.test.ffmpeg.FfmpegModelTestActivity
+import com.soul.soulkit.test.kit.KitCoreModelTestActivity as KitCoreModelTestActivity
 
 /**
  * 主测试Activity - 各个模块功能测试的分发入口
+ * 
+ * 根据功能测试规则，采用三级层级结构：
+ * 第一层：大类（Category）- 本页面展示的三个大类模块
+ * 第二层：小模块分类（Submodule）- 在各个大类测试Activity中展示
+ * 第三层：业务功能列表（Feature List）- 每个小模块下的具体功能测试
  */
 class TestMainActivity : AppCompatActivity() {
 
@@ -40,46 +44,22 @@ class TestMainActivity : AppCompatActivity() {
     private fun initData() {
         val modules = listOf(
             TestModule(
-                name = "Common模块测试",
-                description = "字符串、设备、网络、文件、加密等工具类测试",
+                name = "Core 核心模块",
+                description = "Android 核心功能模块，包含 Android 原生代码的封装，不依赖第三方库，提供基础能力和工具类",
                 icon = "🔧",
-                activityClass = CommonTestActivity::class.java
+                activityClass = CoreModelTestActivity::class.java
             ),
             TestModule(
-                name = "Database模块测试", 
-                description = "数据库相关功能测试",
-                icon = "💾",
-                activityClass = DatabaseTestActivity::class.java
+                name = "Kit 能力模块",
+                description = "常用能力封装模块，封装经过市场验证的第三方库，稳定、常用的开发库",
+                icon = "📦",
+                activityClass = KitCoreModelTestActivity::class.java
             ),
             TestModule(
-                name = "DesignSystem模块测试",
-                description = "设计系统组件测试",
-                icon = "🎨", 
-                activityClass = null // TODO: 待创建
-            ),
-            TestModule(
-                name = "Video播放器测试",
-                description = "视频播放器功能测试",
-                icon = "🎬",
-                activityClass = VideoTestActivity::class.java
-            ),
-            TestModule(
-                name = "FFmpeg播放器测试",
-                description = "基于FFmpeg的视频播放器测试",
+                name = "FFmpeg 专项模块",
+                description = "专项业务模块，视频处理相关功能，大型专业业务模块",
                 icon = "🎥",
-                activityClass = FFmpegTestActivity::class.java
-            ),
-            TestModule(
-                name = "Network模块测试",
-                description = "网络请求相关功能测试", 
-                icon = "🌐",
-                activityClass = null // TODO: 待创建
-            ),
-            TestModule(
-                name = "UI模块测试",
-                description = "UI组件相关功能测试",
-                icon = "📱", 
-                activityClass = null // TODO: 待创建
+                activityClass = FfmpegModelTestActivity::class.java
             )
         )
         
@@ -102,4 +82,4 @@ data class TestModule(
     val description: String,
     val icon: String,
     val activityClass: Class<*>?
-) 
+)
