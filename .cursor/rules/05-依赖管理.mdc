@@ -1,0 +1,41 @@
+<!-- markdownlint-disable -->
+---
+description: 依赖管理规范（Version Catalog）
+globs:
+alwaysApply: false
+---
+
+# 依赖管理规范（Version Catalog）
+
+## 目标
+保证工程依赖的可维护性：版本集中管理、升级成本低、避免“同一依赖多版本”。
+
+## 规则
+1. 版本目录统一集中在
+- `gradle/libs.versions.toml`
+
+2. 不允许在 `build.gradle.kts` / `build.gradle` 内直接写死版本号
+- 错误示例（不建议）：
+  - `implementation("com.squareup.okhttp3:okhttp:4.11.0")`
+- 建议：
+  - `implementation(libs.okhttp)`（前提是 `libs.versions.toml` 已声明）
+
+3. 第三方库添加流程
+1. 在 `gradle/libs.versions.toml` 的 `[versions]` 增加版本键（如需）
+2. 在 `[libraries]` 增加库条目（建议使用明确的 `libs.xxx` 命名）
+3. 在对应模块的 `build.gradle.kts` 使用 `implementation(libs.xxx)` / `kapt(libs.xxx)` 等引用方式
+
+4. 插件添加流程（如需）
+- 根目录与模块通常使用 `alias(libs.plugins.xxx) apply false` 的方式
+- 新增插件时先在 `libs.versions.toml` 的 `[plugins]` 配置 alias
+- 再在对应 `build.gradle.kts` 中使用 `alias(libs.plugins.yyy) apply true/false`
+
+5. 变更后的自检
+- 检查是否存在同一依赖被写成两套版本
+- 检查模块是否仍然能编译（尤其是 Room Compiler、Kapt、Compose 相关插件）
+
+## 检查清单（生成/修改后）
+- [ ] 新增/修改的依赖是否都来自 `gradle/libs.versions.toml`
+- [ ] 未引入硬编码版本号
+- [ ] 插件/依赖引用名符合 `libs.xxx` 规范
+

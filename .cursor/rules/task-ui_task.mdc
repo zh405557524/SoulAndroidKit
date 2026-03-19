@@ -1,0 +1,54 @@
+<!-- markdownlint-disable -->
+---
+description: UI 任务规则（Android）
+globs:
+alwaysApply: false
+---
+
+# UI 任务规则（Android）
+
+## 先继承的约束
+在开始 UI 开发/调整前，必须阅读并遵循：
+- `.cursor/rules/03-ui创建规则.mdc`
+
+若出现冲突，以 `03-ui创建规则.mdc` 为准。
+
+## 1. UI 修改/创建流程
+### 1.1 理解设计输入
+1. 用户提供了截图/描述：先提取关键 UI 元素（标题/模块/按钮/空态/错误态/交互）。
+2. 用户提供了 Figma 链接（如果有）：在编码前读取设计稿关键数据（尺寸、颜色、字体、间距、圆角、阴影、状态）。
+
+### 1.2 确定实现方式（Compose or XML）
+1. 本页面/模块既有实现使用哪种 UI 技术栈？
+- Compose：遵循 Compose 侧组件组织与主题色（优先复用 `core/designsystem` 与 `core/composeui`）
+- 传统 View：遵循 ViewBinding 与 XML 命名、资源管理规范（禁止 `findViewById`）
+
+2. 禁止在同一页面中混用多套风格/资源体系（例如同一 UI 同时使用两套颜色/维度来源）。
+
+### 1.3 布局与样式一致性
+- 使用项目设计系统提供的主题/颜色/尺寸体系（优先从 `core/designsystem` 获取）。
+- 避免硬编码颜色值与尺寸（能用资源/常量就用）。
+- 对圆角、阴影、边框等细节，要与设计输入保持一致。
+
+### 1.4 交互与状态
+1. UI 只负责展示与转发事件
+- 不在 UI 层直接做网络/磁盘/FFmpeg 等耗时业务逻辑
+- 业务流程放在实现层（internal/repository/presenter/viewmodel 等）
+
+2. 状态更新必须可追踪
+- 成功/失败/加载态都要有对应 UI 表现
+- 错误态提供友好反馈（Toast/Snackbar 等按项目工具封装）
+
+## 2. 资源与命名要求（强约束）
+- XML 命名：`activity_xxx.xml` / `fragment_xxx.xml` / `item_xxx.xml` / `dialog_xxx.xml` / `view_xxx.xml`（见 `03-ui创建规则.mdc`）
+- 新建 Activity/Fragment 必须在对应模块的 `AndroidManifest.xml` 显式声明
+- 本地图片/布局资源路径不得硬编码；优先通过项目约定的常量类或资源 id 统一引用（见 `03-ui创建规则.mdc`）
+
+## 3. 检查清单（UI 交付验收）
+- [ ] 业务逻辑不在 UI 层（仅展示/事件转发）
+- [ ] 成功/失败/空/加载等状态有明确 UI 表现
+- [ ] 颜色、尺寸、间距、圆角等细节与设计输入一致（或已说明差异）
+- [ ] XML 命名与 Manifest 声明正确
+- [ ] 禁止 `findViewById`（如项目要求 ViewBinding）
+- [ ] 代码结构清晰、可维护、依赖方向正确
+

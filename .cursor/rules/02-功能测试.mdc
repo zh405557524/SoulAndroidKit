@@ -1,3 +1,10 @@
+<!-- markdownlint-disable -->
+---
+description: SoulAndroidKit 功能测试架构与测试报告规范
+globs:
+alwaysApply: false
+---
+
 # SoulAndroidKit 功能测试规则
 
 ## 📋 测试概述

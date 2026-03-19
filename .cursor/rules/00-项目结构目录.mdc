@@ -1,0 +1,68 @@
+<!-- markdownlint-disable -->
+---
+description: 项目结构目录快速参考（减少查询成本）
+globs:
+alwaysApply: true
+---
+
+# 项目结构目录快速参考（减少查询成本）
+
+## 项目根目录
+`SoulAndroidKit/`
+- `app/`：壳应用（入口、测试页面/示例 Activity 等）
+- `core/`：基础层（通用工具、数据库、网络、UI/Compose 组件、媒体基础等）
+- `feature/`：业务功能层（feature 的 api/impl 分离）
+- `kit/`：能力封装层（对系统/三方能力的统一封装）
+- `ffmpeg/`：专项能力层（FFmpeg JNI 封装）
+- `audio/`：音频专项能力
+- `gradle/libs.versions.toml`：版本目录（Version Catalog）
+- `.cursor/rules/`：Cursor 规则文件
+
+## 模块列表（以 settings.gradle.kts 为准）
+从工程配置可见主要 include：
+- `:app`
+- `:core:common`
+- `:core:database`
+- `:core:designsystem`
+- `:core:media`
+- `:core:network`
+- `:core:ui`
+- `:core:composeui`
+- `:kit:video`
+- `:ffmpeg:ffmpeg_kit`
+- `:audio:piano_note_recognition`
+
+## 核心模块职责速查
+1. `core/common`
+- 常用工具与封装：日志、权限、Toast/Snackbar 等（例如 `LogUtils`、`ToastUtils`、`SnackbarUtils`、`PermissionsUtils`）
+
+2. `core/database`
+- Room 数据库配置、Entity/DAO、迁移等
+
+3. `core/designsystem`
+- 设计系统（Material 主题、颜色/尺寸/通用组件等）
+
+4. `core/composeui`
+- Compose 侧通用 UI 组件/布局能力
+
+5. `core/ui`
+- 传统 View 侧通用 UI 能力（若存在对应 Activity/Fragment 基类或对话框封装，请优先复用）
+
+6. `core/network`
+- Retrofit/OkHttp 网络请求封装、API 接口与错误处理等
+
+7. `core/media`
+- 图片/媒体通用基础能力（加载/预处理等）
+
+## 能力模块职责速查
+1. `kit/video`
+- 视频能力封装（播放器/控制器/视频处理相关接口）
+
+2. `ffmpeg/ffmpeg_kit`
+- FFmpeg JNI 桥接与命令执行封装（专项层）
+
+## 业务模块职责速查
+`feature/*`
+- 业务功能落地层
+- 建议采用 `api/`（接口契约、模型）与 `impl/`（具体实现、UI/Presenter/Repository）分离
+

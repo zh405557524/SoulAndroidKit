@@ -1,0 +1,85 @@
+<!-- markdownlint-disable -->
+---
+description: 新功能 / 新模块开发任务规则（Android）
+globs:
+alwaysApply: false
+---
+
+# 新功能 / 新模块开发任务规则（Android）
+
+## 适用场景
+当用户明确要求“新增一个功能/模块/能力”时优先遵循本规则：先搭骨架，再补齐关键代码，并确保能编译、能被集成、且依赖方向正确。
+
+## 0. 开始前的判断
+1. 这是不是“新 Gradle 模块”还是“新功能包/能力”？
+- 新 Gradle 模块：需要更新 `settings.gradle.kts` 并添加对应 `build.gradle.kts`
+- 仅新功能：通常只需要在现有 `feature/*` 或 `core/*` 下补充包结构与类
+
+2. 功能归属层级
+- 通用能力：`core/*`
+- 系统/三方能力封装：`kit/*`
+- 专项能力：`ffmpeg/ffmpeg_kit`（视频/音频编解码相关等）
+- 业务落地：`feature/*`
+
+## 1. 必备骨架与代码组织
+feature 模块建议采用 API/Impl 分离（契约与实现拆开），示例结构如下（按实际包名落地）：
+1. `api/`：对外契约
+- 接口定义（Repository/Service 接口等）
+- 数据模型（请求/响应/参数模型）
+
+2. `internal/`：具体实现（强依赖 `api`）
+- 实现接口（Repository 实现、Service 实现）
+- 编排业务流程、依赖注入/构造
+
+3. `model/`：数据模型（如需与 `api` 区分）
+- Params、Responses、Domain 模型
+
+4. `repository/`（如需）
+- 数据访问/数据拼装
+
+5. `ui/`（如需 UI）
+- `ui/screen/`：页面/Activity/Fragment
+- `ui/component/`：组件
+
+6. “控制器层”（如工程采用 ViewModel/Presenter 体系）
+- `viewmodel/` 或 `presenter/`
+
+## 2. Android UI 与清单注册
+当新建页面/组件时：
+1. 新建 `Activity` / `Fragment`
+- 传统 View：Activity/Fragment 需要在对应模块的 `AndroidManifest.xml` 中显式声明 Activity
+- XML 命名遵循现有规范（`activity_xxx.xml`、`fragment_xxx.xml`、`dialog_xxx.xml` 等）
+
+2. 避免 UI 层直接处理复杂业务逻辑
+- UI 只负责展示与转发事件
+- 业务流程/数据获取优先放在实现层（internal/repository/presenter/viewmodel）
+
+## 3. 依赖接入与模块边界
+1. 依赖方向保持不倒置
+- 上层（app/feature）可以依赖下层（core/kit/ffmpeg）
+- 底层不应该依赖上层业务实现
+
+2. 新依赖必须走版本目录
+- 所有依赖版本在 `gradle/libs.versions.toml` 维护
+- 模块中使用 `implementation(libs.xxx)` 方式引用
+
+## 4. 集成与联调要点
+1. 对外接口（API）
+- 对外接口需要可读、参数校验明确、错误语义清晰
+
+2. 关键路径最少要做：
+- 成功路径
+- 失败路径（异常/空数据/权限拒绝/文件不存在/网络失败等）
+- 日志与友好提示
+
+3. 如果功能涉及文件/存储/网络
+- 需要补齐权限与失败反馈（见 `task-business_action.mdc`）
+
+## 5. 检查清单
+- [ ] 功能归属层级正确（core/kit/ffmpeg/feature）
+- [ ] API/Impl 分离清晰，依赖方向正确
+- [ ] 新 Activity/Fragment 已在对应模块 Manifest 显式声明
+- [ ] 新资源命名符合项目规范
+- [ ] 关键异常/边界路径有日志与失败反馈
+- [ ] 已完成可运行的最小闭环（能集成、能触发、能回归验证）
+

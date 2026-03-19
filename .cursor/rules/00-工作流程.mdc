@@ -1,0 +1,72 @@
+<!-- markdownlint-disable -->
+---
+description: 代码生成工作流程 - 任务类型判断和规则应用
+globs: 
+alwaysApply: true
+---
+# Android 代码生成工作流程 - 任务类型分发
+
+## 目的
+在开始任何“代码生成/修改”任务前，先完成任务类型判断，并强制阅读并遵循对应的任务规则文件。
+
+## 步骤 1：任务类型判断
+根据你的需求描述，先把任务归类到下面 7 种之一（以最主要关键词为准；如多类型并存，选最主要的类型，但需要参考其他相关规则）。
+
+1. `bug_fix`
+- 关键词：修复、bug、错误、异常、崩溃、问题、失效、crash
+
+2. `logic_change`
+- 关键词：修改、改变、调整、优化、重构、改进、更新逻辑
+
+3. `ui_task`
+- 关键词：UI、界面、布局、样式、颜色、字体、页面、XML、Compose
+
+4. `new_feature`
+- 关键词：新增、添加、创建、实现、开发
+- 特征：需要按模块规范搭建新功能/新模块骨架，并补全关键代码
+
+5. `refactor`
+- 关键词：重构、代码优化、清理、整理、消除重复、简化条件
+
+6. `business_action`
+- 关键词：删除、上传、保存、导入、导出、下载、分享、复制、权限申请、相册/存储/相机等
+- 特征：用户触发的“可交互业务操作”，通常需要：权限申请、加载态/进度、确认弹框、结果反馈
+
+7. `other`
+- 无法明确分类的任务
+
+## 步骤 2：读取对应任务规则文件
+按任务类型读取以下规则并在生成代码时逐条遵循：
+- `bug_fix` → `.cursor/rules/task-bug_fix.mdc`
+- `logic_change` → `.cursor/rules/task-logic_change.mdc`
+- `ui_task` → `.cursor/rules/task-ui_task.mdc`
+- `new_feature` → `.cursor/rules/task-new_feature.mdc`
+- `refactor` → `.cursor/rules/task-refactor.mdc`
+- `business_action` → `.cursor/rules/task-business_action.mdc`
+- `other` → `.cursor/rules/task-other.mdc`
+
+## 步骤 3：按需查找复用点（减少重复造轮子）
+仅在下面情况必须额外做一次“复用/相似实现”检查：
+- `new_feature`：先确认有没有对应的能力模块可复用（`core/*`、`kit/*`、`ffmpeg/ffmpeg_kit`、已有 `feature/*-api/impl`）。
+- `ui_task`：先确认是否已有复用 UI 组件/通用页面结构（例如 `core/designsystem`、`core/composeui`、`kit/*` 的布局资源）。
+
+## 步骤 4：应用规则生成代码
+开始编码时必须：
+- 先改动最小必要范围
+- 保持接口/契约稳定（除非规则要求变更）
+- 必要时补充异常处理、边界校验、日志记录
+
+## 步骤 5：验证检查清单
+代码生成后，至少完成以下检查：
+- [ ] 是否符合对应任务类型规则的“流程步骤”
+- [ ] 是否保持模块依赖方向正确（未引入循环依赖）
+- [ ] 是否补齐必要的错误处理（异常捕获/友好提示）
+- [ ] 是否在涉及文件/权限/网络时补齐权限/进度/确认/反馈
+- [ ] 是否对关键路径加入日志（使用 `LogUtils`/项目既有日志方式）
+
+## 执行示例（模板）
+用户请求：`修复 xx 页面在某些情况下崩溃`
+1. 任务类型：`bug_fix`
+2. 读取：`.cursor/rules/task-bug_fix.mdc`
+3. 定位崩溃点 → 找根因 → 最小改动 → 补错误处理 → 验证
+

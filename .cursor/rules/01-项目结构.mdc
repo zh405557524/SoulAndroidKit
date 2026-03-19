@@ -1,3 +1,10 @@
+<!-- markdownlint-disable -->
+---
+description: SoulAndroidKit 项目结构与分层依赖规则
+globs:
+alwaysApply: false
+---
+
 # SoulAndroidKit 项目结构规则
 
 ## 📋 项目概述

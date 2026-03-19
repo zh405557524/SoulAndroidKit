@@ -1,0 +1,66 @@
+<!-- markdownlint-disable -->
+---
+description: 业务操作任务规则（Android）
+globs:
+alwaysApply: false
+---
+
+# 业务操作任务规则（Android）
+
+## 任务定义
+业务操作任务指用户触发的可交互操作，通常包含以下特征：
+- 需要权限或访问系统能力（存储/相册/相机/网络/文件等）
+- 可能包含耗时过程（下载/上传/编解码/文件处理）
+- 可能包含不可逆操作（删除/清空/覆盖等）
+- 需要明确的加载态与结果反馈
+
+## 1. 权限申请（必须先做）
+1. 优先使用项目封装：`core/common/utils/PermissionsUtils`
+- 常见入口：`PermissionsUtils.lacksPermissions(activity, permissions...)`
+
+2. 底层机制
+- 该封装最终通过 `androidx.core.app.ActivityCompat.requestPermissions` 发起权限请求
+
+3. 回调处理
+- 发起权限请求后，需要在对应 `Activity` 中实现/处理权限回调（通常为 `onRequestPermissionsResult` 或 ActivityResult 体系）
+- 业务执行必须放在“权限已授予”的回调路径中，避免权限未授权时直接继续执行
+
+## 2. 加载态/进度（避免让用户等待无响应）
+1. 原则
+- 耗时操作开始时，UI 需要进入“不可重复点击”或显示进度指示
+- 操作结束（成功/失败）后恢复交互并提示结果
+
+2. 实现方式（按项目现状选型）
+- 若项目已有统一 Loading/进度封装：优先复用
+- 若没有统一封装：使用系统/Material 组件（如 `ProgressBar`）并禁用相关按钮/控件
+
+## 3. 危险操作二次确认
+当操作满足“不可逆/高风险”条件（删除、清空、覆盖、批量导出替换等）时：
+1. 使用 `AlertDialog.Builder`（或项目已有 dialog 封装）展示确认内容
+2. 必须包含：
+- 风险说明（操作后果）
+- 明确的确认/取消按钮
+3. 只有确认后才执行真正的业务逻辑
+
+## 4. 结果反馈（成功/失败都要反馈）
+1. Toast
+- 优先使用项目封装：`ToastUtils`
+- 常用：`ToastUtils.showShortToast(...)` / `ToastUtils.showLongToast(...)`（或对应 Safe 版本）
+
+2. Snackbar
+- 优先使用项目封装：`SnackbarUtils`
+- 避免直接写散落的 `Snackbar.make(...)`（统一风格与主题）
+
+## 5. 错误处理与日志（可定位）
+- 捕获异常后要记录关键上下文（模块名/参数/阶段）
+- 使用项目日志工具（如 `LogUtils`）而不是只打印 stacktrace
+- 失败要给出用户可理解的提示，并保持不崩溃
+
+## 检查清单（交付前）
+- [ ] 权限申请时机正确（未授权时不执行业务）
+- [ ] 耗时操作有加载态/进度与不可重复点击
+- [ ] 危险操作有二次确认
+- [ ] 成功/失败都有结果反馈（Toast/Snackbar）
+- [ ] 失败路径有日志可定位
+- [ ] 线程/异步处理正确（耗时不阻塞 UI）
+
