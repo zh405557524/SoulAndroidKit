@@ -52,6 +52,7 @@ dependencies {
     implementation(project(":core:common"))
     implementation(project(":feature:video"))
     implementation(project(":ffmpeg:ffmpeg_kit"))
+    implementation(project(":audio:piano_note_recognition"))
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.recyclerview)
     implementation(libs.material)
