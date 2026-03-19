@@ -19,6 +19,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.soul.android_kit.ui.theme.AndroidkitTheme
+import com.soul.soulkit.test.kit.video.VideoTestActivity
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,7 +54,7 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
         
         Button(
             onClick = {
-                context.startActivity(Intent(context, com.soul.soulkit.test.video.VideoTestActivity::class.java))
+                context.startActivity(Intent(context, VideoTestActivity::class.java))
             }
         ) {
             Text("测试视频播放器")

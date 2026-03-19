@@ -1,14 +1,14 @@
-package com.soul.soulkit.test.common
+package com.soul.soulkit.test.core.common
 
 import android.os.Bundle
 import android.widget.Button
 import android.widget.ScrollView
 import android.widget.LinearLayout
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import com.soul.android_kit.R
 import com.soul.soulkit.test.BaseTestActivity
 import com.soul.common.Global
+import com.soul.soulkit.test.TestCategory
+import com.soul.soulkit.test.TestItem
 import kotlinx.coroutines.*
 
 /**
@@ -243,18 +243,3 @@ class CommonTestActivity : BaseTestActivity() {
     // ... 其他测试方法将在下一个文件中实现
 }
 
-/**
- * 测试分类数据类
- */
-data class TestCategory(
-    val name: String,
-    val tests: List<TestItem>
-)
-
-/**
- * 测试项数据类
- */
-data class TestItem(
-    val name: String,
-    val testAction: () -> Boolean
-) 

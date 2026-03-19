@@ -8,7 +8,6 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.soul.android_kit.R
-import com.soul.soulkit.test.common.TestItem
 
 /**
  * 基础测试Activity，包含通用的测试功能
@@ -127,4 +126,20 @@ open class BaseTestActivity : AppCompatActivity() {
             .setPositiveButton("确定", null)
             .show()
     }
-} 
+}
+
+/**
+ * 测试分类数据类
+ */
+data class TestCategory(
+    val name: String,
+    val tests: List<TestItem>
+)
+
+/**
+ * 测试项数据类
+ */
+data class TestItem(
+    val name: String,
+    val testAction: () -> Boolean
+)

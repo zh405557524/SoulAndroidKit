@@ -1,0 +1,53 @@
+# Android UI 创建规则
+
+---
+
+## 一、规则适用范围与说明
+
+- 本规则适用于所有 **Android 原生模块（含 app / feature / core-ui）** 的 UI 层代码创建与优化场景。
+- 本规则与《新功能模块创建专用代码生成规则》自动继承一致的代码规范，如有冲突，以本文件为准。
+- 主要约束 UI 层的布局结构、样式使用、颜色体系、适配方案、命名规则等。
+- 本规则同样支持动态完善，建议在项目演进中持续补充。
+
+---
+
+## 二、当前继承内容（细致代码规则）
+
+> - 所有 Activity 必须继承 `BaseActivity`，所有 Fragment 必须继承 `BaseFragment`
+> - 控制器（ViewModel）统一通过 `state + event` 管理 UI 状态
+> - 布局采用 ViewBinding 或 Compose，不得混用 findViewById
+> - 资源引用需通过常量类统一声明
+> - 禁止 UI 层直接调用 data 层（遵循 Clean Architecture）
+
+---
+
+### 2.1 布局与命名规范
+
+#### 2.1.1 XML 布局文件命名规则
+
+| 类型       | 命名格式             | 示例                     |
+|-------------|----------------------|---------------------------|
+| Activity    | `activity_xxx.xml`   | `activity_login.xml`      |
+| Fragment    | `fragment_xxx.xml`   | `fragment_home.xml`       |
+| Item View   | `item_xxx.xml`       | `item_user_list.xml`      |
+| Dialog      | `dialog_xxx.xml`     | `dialog_confirm.xml`      |
+| Custom View | `view_xxx.xml`       | `view_empty_state.xml`    |
+
+> 文件名统一使用小写+下划线风格；禁止中文、空格、特殊字符。
+
+---
+
+#### 2.1.2 Activity 声明要求（新增）
+
+- 每个新建的 `Activity` 必须在 `AndroidManifest.xml` 中**显式声明**，否则无法被系统识别。
+- 声明位置必须在对应模块的 `AndroidManifest.xml`，禁止跨模块注册。
+- 推荐使用全路径声明方式（避免重名冲突），并明确导出状态和启动模式。
+- 示例：
+
+```xml
+<activity
+    android:name="com.example.app.ui.activity.VideoEditActivity"
+    android:exported="false"
+    android:launchMode="singleTop"
+    android:theme="@style/Theme.App"
+    android:screenOrientation="portrait" />
